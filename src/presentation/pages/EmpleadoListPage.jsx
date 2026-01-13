@@ -1,26 +1,27 @@
+// src/presentation/pages/EmpleadoListPage.jsx
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import apiClient from '../../infrastructure/http/apiClient';
 
-export default function ProductoListPage() {
+export default function EmpleadoListPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [productos, setProductos] = useState([]);
+  const [empleados, setEmpleados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchId, setSearchId] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchProductos();
+    fetchEmpleados();
   }, []);
 
-  const fetchProductos = async () => {
+  const fetchEmpleados = async () => {
     try {
-      const response = await apiClient.get('/Producto');
-      setProductos(Array.isArray(response.data) ? response.data : []);
+      const response = await apiClient.get('/Empleado');
+      setEmpleados(Array.isArray(response.data) ? response.data : []);
     } catch (err) {
-      console.error('Error al cargar productos:', err);
-      alert('No se pudieron cargar los productos.');
+      console.error('Error al cargar empleados:', err);
+      alert('No se pudieron cargar los empleados.');
     } finally {
       setLoading(false);
     }
@@ -28,28 +29,28 @@ export default function ProductoListPage() {
 
   const handleSearchById = async () => {
     if (!searchId.trim()) {
-      fetchProductos();
+      fetchEmpleados();
       return;
     }
     try {
-      const response = await apiClient.get(`/Producto/${searchId.trim()}`);
-      setProductos([response.data]);
+      const response = await apiClient.get(`/Empleado/${searchId.trim()}`);
+      setEmpleados([response.data]);
     } catch (err) {
       if (err.response?.status === 404) {
-        alert('Producto no encontrado.');
-        setProductos([]);
+        alert('Empleado no encontrado.');
+        setEmpleados([]);
       } else {
-        alert('Error al buscar producto.');
+        alert('Error al buscar empleado.');
       }
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('¿Eliminar este producto?')) return;
+    if (!window.confirm('¿Eliminar este empleado?')) return;
     try {
-      await apiClient.delete(`/Producto/${id}`);
-      alert('Producto eliminado.');
-      fetchProductos();
+      await apiClient.delete(`/Empleado/${id}`);
+      alert('Empleado eliminado.');
+      fetchEmpleados();
     } catch (err) {
       alert('Error al eliminar: ' + (err.response?.data?.mensaje || 'Falló'));
     }
@@ -70,7 +71,7 @@ export default function ProductoListPage() {
         }}
       >
         <h1 style={{ fontSize: '1.8rem', color: '#027259', fontWeight: '600', marginBottom: '20px' }}>
-          Gestión de Productos
+          Gestión de Empleados
         </h1>
 
         {/* Búsqueda */}
@@ -96,7 +97,7 @@ export default function ProductoListPage() {
             Buscar
           </button>
           <button
-            onClick={fetchProductos}
+            onClick={fetchEmpleados}
             style={{
               backgroundColor: '#6c757d',
               color: 'white',
@@ -112,7 +113,7 @@ export default function ProductoListPage() {
 
         {/* Botón Nuevo */}
         <button
-          onClick={() => navigate('/productos/nuevo')}
+          onClick={() => navigate('/empleados/nuevo')}
           style={{
             marginBottom: '20px',
             backgroundColor: '#4CAF50',
@@ -123,7 +124,7 @@ export default function ProductoListPage() {
             cursor: 'pointer',
           }}
         >
-          + Nuevo Producto
+          + Nuevo Empleado
         </button>
 
         {/* Tabla */}
@@ -135,26 +136,24 @@ export default function ProductoListPage() {
               <tr style={{ backgroundColor: '#E8F5E9' }}>
                 <th style={{ padding: '12px', textAlign: 'left' }}>ID</th>
                 <th style={{ padding: '12px', textAlign: 'left' }}>Nombre</th>
-                <th style={{ padding: '12px', textAlign: 'left' }}>Unidad</th>
-                <th style={{ padding: '12px', textAlign: 'right' }}>Precio</th>
-                <th style={{ padding: '12px', textAlign: 'center' }}>Stock</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Apellido</th>
+                <th style={{ padding: '12px', textAlign: 'left' }}>Cargo</th>
                 <th style={{ padding: '12px', textAlign: 'center' }}>Estado</th>
                 <th style={{ padding: '12px', textAlign: 'center' }}>Acciones</th>
               </tr>
             </thead>
             <tbody>
-              {productos.length > 0 ? (
-                productos.map((p) => (
-                  <tr key={p.id} style={{ borderBottom: '1px solid #eee' }}>
-                    <td style={{ padding: '12px', fontSize: '0.85rem', wordBreak: 'break-all' }}>{p.id}</td>
-                    <td>{p.nombre}</td>
-                    <td>{p.unidadMedida}</td>
-                    <td style={{ textAlign: 'right' }}>{p.precioReferencia.toFixed(2)}</td>
-                    <td style={{ textAlign: 'center' }}>{p.stockActual}</td>
-                    <td style={{ textAlign: 'center' }}>{p.estado ? 'Activo' : 'Inactivo'}</td>
+              {empleados.length > 0 ? (
+                empleados.map((e) => (
+                  <tr key={e.id} style={{ borderBottom: '1px solid #eee' }}>
+                    <td style={{ padding: '12px', fontSize: '0.85rem', wordBreak: 'break-all' }}>{e.id}</td>
+                    <td>{e.nombre}</td>
+                    <td>{e.apellido}</td>
+                    <td>{e.cargo || '—'}</td>
+                    <td style={{ textAlign: 'center' }}>{e.estado ? 'Activo' : 'Inactivo'}</td>
                     <td style={{ textAlign: 'center' }}>
                       <button
-                        onClick={() => navigate(`/productos/editar/${p.id}`)}
+                        onClick={() => navigate(`/empleados/editar/${e.id}`)}
                         style={{
                           marginRight: '6px',
                           backgroundColor: '#2196F3',
@@ -169,7 +168,7 @@ export default function ProductoListPage() {
                         Editar
                       </button>
                       <button
-                        onClick={() => handleDelete(p.id)}
+                        onClick={() => handleDelete(e.id)}
                         style={{
                           backgroundColor: '#f44336',
                           color: 'white',
@@ -187,8 +186,8 @@ export default function ProductoListPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" style={{ padding: '20px', textAlign: 'center' }}>
-                    No hay productos.
+                  <td colSpan="6" style={{ padding: '20px', textAlign: 'center' }}>
+                    No hay empleados.
                   </td>
                 </tr>
               )}

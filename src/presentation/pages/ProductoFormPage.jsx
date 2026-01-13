@@ -262,8 +262,8 @@ export default function ProductoFormPage() {
                 backgroundColor: loading 
                   ? '#ccc' 
                   : isEditing 
-                    ? '#FFA500'   // 🟠 Naranja para "Actualizar"
-                    : '#4CAF50',  // 🟢 Verde para "Crear"
+                    ? '#FFA500'   
+                    : '#4CAF50',  
                 color: 'white',
                 padding: '10px 16px',
                 border: 'none',
