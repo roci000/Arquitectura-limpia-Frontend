@@ -8,6 +8,8 @@ import EmpleadoListPage from './presentation/pages/EmpleadoListPage';
 import EmpleadoFormPage from './presentation/pages/EmpleadoFormPage';
 import ClienteListPage from './presentation/pages/ClienteListPage';
 import ClienteFormPage from './presentation/pages/ClienteFormPage';
+import IngresoListPage from './presentation/pages/IngresoListPage';
+import IngresoFormPage from './presentation/pages/IngresoFormPage';
 
 export default function App() {
   return (
@@ -30,6 +32,9 @@ export default function App() {
         <Route path="/clientes" element={<ClienteListPage />} />
         <Route path="/clientes/nuevo" element={<ClienteFormPage/>} />
         <Route path="/clientes/editar/:id" element={<ClienteFormPage />} />
+
+        <Route path="/ingresos" element={<IngresoListPage />} />
+        <Route path="/ingresos/nuevo" element={<IngresoFormPage />} />
       </Routes>
     </BrowserRouter>
   );
