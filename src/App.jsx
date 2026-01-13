@@ -10,6 +10,8 @@ import ClienteListPage from './presentation/pages/ClienteListPage';
 import ClienteFormPage from './presentation/pages/ClienteFormPage';
 import IngresoListPage from './presentation/pages/IngresoListPage';
 import IngresoFormPage from './presentation/pages/IngresoFormPage';
+import VentaListPage from './presentation/pages/VentaListPage';
+import VentaFormPage from './presentation/pages/VentaFormPage';
 
 export default function App() {
   return (
@@ -35,6 +37,9 @@ export default function App() {
 
         <Route path="/ingresos" element={<IngresoListPage />} />
         <Route path="/ingresos/nuevo" element={<IngresoFormPage />} />
+
+        <Route path="/ventas" element={<VentaListPage />} />
+        <Route path="/ventas/nuevo" element={<VentaFormPage />} />
       </Routes>
     </BrowserRouter>
   );
