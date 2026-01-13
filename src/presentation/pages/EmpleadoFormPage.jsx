@@ -1,4 +1,3 @@
-// src/presentation/pages/EmpleadoFormPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -64,15 +63,15 @@ export default function EmpleadoFormPage() {
 
       if (isEditing) {
         await apiClient.put(`/Empleado/${id}`, payload);
-        alert('✅ Empleado actualizado correctamente.');
+        alert('Empleado actualizado correctamente.');
       } else {
         await apiClient.post('/Empleado', payload);
-        alert('✅ Empleado creado correctamente.');
+        alert('Empleado creado correctamente.');
       }
 
       navigate('/empleados');
     } catch (err) {
-      alert('❌ Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
+      alert('Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
     } finally {
       setLoading(false);
     }
@@ -93,72 +92,38 @@ export default function EmpleadoFormPage() {
         }}
       >
         <h2 style={{ color: '#027259', marginBottom: '20px' }}>
-          {isEditing ? '✏️ Editar Empleado' : '➕ Nuevo Empleado'}
+          {isEditing ? 'Editar Empleado' : 'Nuevo Empleado'}
         </h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Nombre */}
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
               Nombre:
             </label>
-            <input
-              id="nombre"
-              name="nombre"
-              value={form.nombre}
-              onChange={handleChange}
-              placeholder="Ej: Juan"
-              required
-              style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
+            <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Juan" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           </div>
 
-          {/* Apellido */}
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="apellido" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
               Apellido:
             </label>
-            <input
-              id="apellido"
-              name="apellido"
-              value={form.apellido}
-              onChange={handleChange}
-              placeholder="Ej: Pérez"
-              required
-              style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
+            <input id="apellido" name="apellido" value={form.apellido} onChange={handleChange} placeholder="Ej: Pérez" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           </div>
 
-          {/* Cargo */}
           <div style={{ marginBottom: '16px' }}>
             <label htmlFor="cargo" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
               Cargo:
             </label>
-            <input
-              id="cargo"
-              name="cargo"
-              value={form.cargo}
-              onChange={handleChange}
-              placeholder="Opcional"
-              style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
-            />
+            <input id="cargo" name="cargo" value={form.cargo} onChange={handleChange} placeholder="Opcional" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           </div>
 
-          {/* Estado */}
           <div style={{ marginBottom: '24px' }}>
             <label htmlFor="estado" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259' }}>
-              <input
-                id="estado"
-                name="estado"
-                type="checkbox"
-                checked={form.estado}
-                onChange={handleChange}
-              />
+              <input id="estado" name="estado" type="checkbox" checked={form.estado} onChange={handleChange} />
               Activo
             </label>
           </div>
 
-          {/* Botones con tus colores */}
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
               type="submit"

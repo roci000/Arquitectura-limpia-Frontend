@@ -1,4 +1,3 @@
-// src/presentation/pages/ProductoFormPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -71,15 +70,15 @@ export default function ProductoFormPage() {
 
       if (isEditing) {
         await apiClient.put(`/Producto/${id}`, payload);
-        alert('✅ Producto actualizado correctamente.');
+        alert('Producto actualizado correctamente.');
       } else {
         await apiClient.post('/Producto', payload);
-        alert('✅ Producto creado correctamente.');
+        alert('Producto creado correctamente.');
       }
 
       navigate('/productos');
     } catch (err) {
-      alert('❌ Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
+      alert('Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
     } finally {
       setLoading(false);
     }
@@ -100,159 +99,45 @@ export default function ProductoFormPage() {
         }}
       >
         <h2 style={{ color: '#027259', marginBottom: '20px' }}>
-          {isEditing ? '✏️ Editar Producto' : '➕ Nuevo Producto'}
+          {isEditing ? 'ditar Producto' : 'Nuevo Producto'}
         </h2>
 
         <form onSubmit={handleSubmit}>
-          {/* Nombre */}
           <div style={{ marginBottom: '16px' }}>
-            <label
-              htmlFor="nombre"
-              style={{
-                display: 'block',
-                marginBottom: '4px',
-                fontWeight: '600',
-                color: '#027259',
-              }}
-            >
+            <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }}>
               Nombre:
             </label>
-            <input
-              id="nombre"
-              name="nombre"
-              value={form.nombre}
-              onChange={handleChange}
-              placeholder="Ej: Chaucha"
-              required
-              style={{
-                width: '100%',
-                padding: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                fontSize: '1rem',
-              }}
-            />
+            <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Chaucha" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }}/>
           </div>
 
-          {/* Unidad de Medida */}
           <div style={{ marginBottom: '16px' }}>
-            <label
-              htmlFor="unidadMedida"
-              style={{
-                display: 'block',
-                marginBottom: '4px',
-                fontWeight: '600',
-                color: '#027259',
-              }}
-            >
+            <label htmlFor="unidadMedida" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259',}}>
               Unidad de Medida:
             </label>
-            <input
-              id="unidadMedida"
-              name="unidadMedida"
-              value={form.unidadMedida}
-              onChange={handleChange}
-              placeholder="Ej: Cajon, Kilo"
-              required
-              style={{
-                width: '100%',
-                padding: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                fontSize: '1rem',
-              }}
-            />
+            <input id="unidadMedida" name="unidadMedida" value={form.unidadMedida} onChange={handleChange} placeholder="Ej: Cajon, Kilo" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem',}}/>
           </div>
 
-          {/* Precio Referencia */}
           <div style={{ marginBottom: '16px' }}>
-            <label
-              htmlFor="precioReferencia"
-              style={{
-                display: 'block',
-                marginBottom: '4px',
-                fontWeight: '600',
-                color: '#027259',
-              }}
-            >
+            <label htmlFor="precioReferencia" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }} >
               Precio Referencia (S/):
             </label>
-            <input
-              id="precioReferencia"
-              name="precioReferencia"
-              type="number"
-              step="0.01"
-              value={form.precioReferencia}
-              onChange={handleChange}
-              placeholder="Ej: 23.00"
-              required
-              min="0"
-              style={{
-                width: '100%',
-                padding: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                fontSize: '1rem',
-              }}
-            />
+            <input id="precioReferencia" name="precioReferencia" type="number" step="0.01" value={form.precioReferencia} onChange={handleChange} placeholder="Ej: 23.00" required min="0" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }} />
           </div>
 
-          {/* Stock Actual */}
           <div style={{ marginBottom: '16px' }}>
-            <label
-              htmlFor="stockActual"
-              style={{
-                display: 'block',
-                marginBottom: '4px',
-                fontWeight: '600',
-                color: '#027259',
-              }}
-            >
+            <label htmlFor="stockActual" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }} >
               Stock Actual:
             </label>
-            <input
-              id="stockActual"
-              name="stockActual"
-              type="number"
-              value={form.stockActual}
-              onChange={handleChange}
-              placeholder="Ej: 100"
-              required
-              min="0"
-              style={{
-                width: '100%',
-                padding: '8px',
-                border: '1px solid #ccc',
-                borderRadius: '4px',
-                fontSize: '1rem',
-              }}
-            />
+            <input id="stockActual" name="stockActual" type="number" value={form.stockActual} onChange={handleChange} placeholder="Ej: 100" required min="0" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }} />
           </div>
 
-          {/* Estado */}
           <div style={{ marginBottom: '24px' }}>
-            <label
-              htmlFor="estado"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                fontWeight: '600',
-                color: '#027259',
-              }}
-            >
-              <input
-                id="estado"
-                name="estado"
-                type="checkbox"
-                checked={form.estado}
-                onChange={handleChange}
-              />
+            <label htmlFor="estado" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259', }} >
+              <input id="estado" name="estado" type="checkbox" checked={form.estado} onChange={handleChange} />
               Activo
             </label>
           </div>
 
-          {/* Botones con tus colores favoritos */}
           <div style={{ display: 'flex', gap: '10px' }}>
             <button
               type="submit"
@@ -281,7 +166,7 @@ export default function ProductoFormPage() {
               onClick={() => navigate('/productos')}
               style={{
                 flex: 1,
-                backgroundColor: '#f44336', // 🔴 Rojo para "Cancelar"
+                backgroundColor: '#f44336',
                 color: 'white',
                 padding: '10px 16px',
                 border: 'none',

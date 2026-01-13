@@ -1,4 +1,3 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DashboardPage from './presentation/pages/DashboardPage';
 import ProductoListPage from './presentation/pages/ProductoListPage';
@@ -7,6 +6,8 @@ import ProveedorListPage from './presentation/pages/ProveedorListPage';
 import ProveedorFormPage from './presentation/pages/ProveedorFormPage';
 import EmpleadoListPage from './presentation/pages/EmpleadoListPage';
 import EmpleadoFormPage from './presentation/pages/EmpleadoFormPage';
+import ClienteListPage from './presentation/pages/ClienteListPage';
+import ClienteFormPage from './presentation/pages/ClienteFormPage';
 
 export default function App() {
   return (
@@ -25,6 +26,10 @@ export default function App() {
         <Route path="/empleados" element={<EmpleadoListPage />} />
         <Route path="/empleados/nuevo" element={<EmpleadoFormPage />} />
         <Route path="/empleados/editar/:id" element={<EmpleadoFormPage />} />
+
+        <Route path="/clientes" element={<ClienteListPage />} />
+        <Route path="/clientes/nuevo" element={<ClienteFormPage/>} />
+        <Route path="/clientes/editar/:id" element={<ClienteFormPage />} />
       </Routes>
     </BrowserRouter>
   );

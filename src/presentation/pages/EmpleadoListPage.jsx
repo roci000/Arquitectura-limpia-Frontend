@@ -1,4 +1,3 @@
-// src/presentation/pages/EmpleadoListPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -74,7 +73,6 @@ export default function EmpleadoListPage() {
           Gestión de Empleados
         </h1>
 
-        {/* Búsqueda */}
         <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
           <input
             type="text"
@@ -111,7 +109,6 @@ export default function EmpleadoListPage() {
           </button>
         </div>
 
-        {/* Botón Nuevo */}
         <button
           onClick={() => navigate('/empleados/nuevo')}
           style={{
@@ -127,7 +124,6 @@ export default function EmpleadoListPage() {
           + Nuevo Empleado
         </button>
 
-        {/* Tabla */}
         {loading ? (
           <p>Cargando...</p>
         ) : (

@@ -1,4 +1,3 @@
-// src/presentation/pages/ProveedorListPage.jsx
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -74,7 +73,6 @@ export default function ProveedorListPage() {
           Gestión de Proveedores
         </h1>
 
-        {/* Búsqueda */}
         <div style={{ marginBottom: '20px', display: 'flex', gap: '10px' }}>
           <input
             type="text"
@@ -111,7 +109,6 @@ export default function ProveedorListPage() {
           </button>
         </div>
 
-        {/* Botón Nuevo */}
         <button
           onClick={() => navigate('/proveedores/nuevo')}
           style={{
@@ -127,7 +124,6 @@ export default function ProveedorListPage() {
           + Nuevo Proveedor
         </button>
 
-        {/* Tabla */}
         {loading ? (
           <p>Cargando...</p>
         ) : (

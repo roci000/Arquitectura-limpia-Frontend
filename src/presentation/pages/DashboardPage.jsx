@@ -1,4 +1,3 @@
-// src/presentation/pages/DashboardPage.jsx
 import { useState } from 'react';
 import ModuleCard from '../components/ui/ModuleCard';
 import Sidebar from '../components/layout/Sidebar';

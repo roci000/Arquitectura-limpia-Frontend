@@ -3,10 +3,10 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import apiClient from '../../infrastructure/http/apiClient';
 
-export default function ProveedorFormPage() {
+export default function ClienteFormPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [form, setForm] = useState({
-    nombre: '',
+    nombreCompleto: '',
     telefono: '',
     direccion: '',
     estado: true,
@@ -22,23 +22,23 @@ export default function ProveedorFormPage() {
     setIsEditing(isEdit);
 
     if (isEdit && id) {
-      loadProveedor(id);
+      loadCliente(id);
     }
   }, [location.pathname, id]);
 
-  const loadProveedor = async (proveedorId) => {
+  const loadCliente = async (clienteId) => {
     try {
-      const response = await apiClient.get(`/Proveedor/${proveedorId}`);
+      const response = await apiClient.get(`/Cliente/${clienteId}`);
       setForm({
-        nombre: response.data.nombre || '',
+        nombreCompleto: response.data.nombreCompleto || '',
         telefono: response.data.telefono || '',
         direccion: response.data.direccion || '',
         estado: response.data.estado ?? true,
       });
     } catch (err) {
-      console.error('Error al cargar proveedor:', err);
-      alert('No se pudo cargar el proveedor.');
-      navigate('/proveedores');
+      console.error('Error al cargar cliente:', err);
+      alert('No se pudo cargar el cliente.');
+      navigate('/clientes');
     }
   };
 
@@ -55,21 +55,21 @@ export default function ProveedorFormPage() {
     setLoading(true);
     try {
       const payload = {
-        nombre: form.nombre.trim(),
+        nombreCompleto: form.nombreCompleto.trim(),
         telefono: form.telefono.trim() || null,
-        direccion: form.direccion.trim(),
+        direccion: form.direccion.trim() || null,
         estado: form.estado,
       };
 
       if (isEditing) {
-        await apiClient.put(`/Proveedor/${id}`, payload);
-        alert('Proveedor actualizado correctamente.');
+        await apiClient.put(`/Cliente/${id}`, payload);
+        alert('Cliente actualizado correctamente.');
       } else {
-        await apiClient.post('/Proveedor', payload);
-        alert('Proveedor creado correctamente.');
+        await apiClient.post('/Cliente', payload);
+        alert('Cliente creado correctamente.');
       }
 
-      navigate('/proveedores');
+      navigate('/clientes');
     } catch (err) {
       alert('Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
     } finally {
@@ -92,15 +92,15 @@ export default function ProveedorFormPage() {
         }}
       >
         <h2 style={{ color: '#027259', marginBottom: '20px' }}>
-          {isEditing ? 'Editar Proveedor' : 'Nuevo Proveedor'}
+          {isEditing ? 'Editar Cliente' : 'Nuevo Cliente'}
         </h2>
 
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-              Nombre:
+            <label htmlFor="nombreCompleto" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
+              Nombre Completo:
             </label>
-            <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Distribuidora ABC" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+            <input id="nombreCompleto" name="nombreCompleto" value={form.nombreCompleto} onChange={handleChange} placeholder="Ej: María López" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}/>
           </div>
 
           <div style={{ marginBottom: '16px' }}>
@@ -114,7 +114,7 @@ export default function ProveedorFormPage() {
             <label htmlFor="direccion" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
               Dirección:
             </label>
-            <input id="direccion" name="direccion" value={form.direccion} onChange={handleChange} placeholder="Ej: Av. Siempre Viva 123" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
+            <input id="direccion" name="direccion" value={form.direccion} onChange={handleChange} placeholder="Opcional" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
           </div>
 
           <div style={{ marginBottom: '24px' }}>
@@ -143,7 +143,7 @@ export default function ProveedorFormPage() {
             </button>
             <button
               type="button"
-              onClick={() => navigate('/proveedores')}
+              onClick={() => navigate('/clientes')}
               style={{
                 flex: 1,
                 backgroundColor: '#f44336',
