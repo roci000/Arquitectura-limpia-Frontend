@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function Sidebar({ collapsed, onToggle }) {
   const modules = [
-    { name: 'Inicio', path: '/', icon: '🏠' }, 
+    { name: 'Inicio', path: '/', icon: '🏠' },
     { name: 'Ventas', path: '/ventas', icon: '💰' },
     { name: 'Ingresos', path: '/ingresos', icon: '📦' },
     { name: 'Productos', path: '/productos', icon: '📱' },
@@ -48,12 +48,12 @@ export default function Sidebar({ collapsed, onToggle }) {
         ) : (
           <>
             <img 
-              src="src/assets/verduras.png" 
+              src="/assets/verduras.png" 
               alt="Verduras" 
-              style={{ width: '45px', height: '45px', marginRight: '10px', borderRadius: '4px' }} 
+              style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '4px' }} 
             />
             Sistema de Gestión
-            
+            <span style={{ marginRight: '20px' }}>X</span>
           </>
         )}
       </div>
