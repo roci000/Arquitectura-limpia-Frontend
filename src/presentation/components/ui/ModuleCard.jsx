@@ -27,8 +27,8 @@ export default function ModuleCard({ title, icon, to }) {
         e.currentTarget.style.boxShadow = '0 2px 8px rgba(2, 114, 89, 0.1)';
       }}
     >
-      <div style={{ fontSize: '2.5rem', marginBottom: '12px' }}>{icon}</div>
-      <div style={{ fontSize: '1.1rem' }}>{title}</div>
+      <div style={{ fontSize: '2.5rem', marginBottom: '12px', color: '#027259' }}>{icon}</div>
+      <div style={{ fontSize: '1.1rem', color: '#027259' }}>{title}</div>
     </Link>
   );
 }

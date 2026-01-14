@@ -21,10 +21,7 @@ export default function ProductoFormPage() {
   useEffect(() => {
     const isEdit = location.pathname.includes('/editar/');
     setIsEditing(isEdit);
-
-    if (isEdit && id) {
-      loadProducto(id);
-    }
+    if (isEdit && id) loadProducto(id);
   }, [location.pathname, id]);
 
   const loadProducto = async (productId) => {
@@ -38,15 +35,14 @@ export default function ProductoFormPage() {
         estado: response.data.estado ?? true,
       });
     } catch (err) {
-      console.error('Error al cargar producto:', err);
-      alert('No se pudo cargar el producto.');
+      alert('No se pudo cargar el producto.', err);
       navigate('/productos');
     }
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
@@ -63,11 +59,6 @@ export default function ProductoFormPage() {
         stockActual: parseInt(form.stockActual, 10),
         estado: form.estado,
       };
-
-      if (isNaN(payload.precioReferencia) || isNaN(payload.stockActual)) {
-        throw new Error('Precio y Stock deben ser números válidos.');
-      }
-
       if (isEditing) {
         await apiClient.put(`/Producto/${id}`, payload);
         alert('Producto actualizado correctamente.');
@@ -75,10 +66,10 @@ export default function ProductoFormPage() {
         await apiClient.post('/Producto', payload);
         alert('Producto creado correctamente.');
       }
-
       navigate('/productos');
     } catch (err) {
-      alert('Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
+      const mensaje = err.response?.data?.mensaje || 'Operación fallida';
+      alert('Error: ' + mensaje);
     } finally {
       setLoading(false);
     }
@@ -99,83 +90,31 @@ export default function ProductoFormPage() {
         }}
       >
         <h2 style={{ color: '#027259', marginBottom: '20px' }}>
-          {isEditing ? 'ditar Producto' : 'Nuevo Producto'}
+          {isEditing ? 'Editar Producto' : 'Nuevo Producto'}
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }}>
-              Nombre:
-            </label>
-            <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Chaucha" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }}/>
-          </div>
+          <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Nombre:</label>
+          <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Chaucha" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="unidadMedida" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259',}}>
-              Unidad de Medida:
-            </label>
-            <input id="unidadMedida" name="unidadMedida" value={form.unidadMedida} onChange={handleChange} placeholder="Ej: Cajon, Kilo" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem',}}/>
-          </div>
+          <label htmlFor="unidadMedida" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Unidad de Medida:</label>
+          <input id="unidadMedida" name="unidadMedida" value={form.unidadMedida} onChange={handleChange} placeholder="Ej: Cajon, Kilo" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="precioReferencia" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }} >
-              Precio Referencia (S/):
-            </label>
-            <input id="precioReferencia" name="precioReferencia" type="number" step="0.01" value={form.precioReferencia} onChange={handleChange} placeholder="Ej: 23.00" required min="0" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }} />
-          </div>
+          <label htmlFor="precioReferencia" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Precio Referencia (S/):</label>
+          <input id="precioReferencia" name="precioReferencia" type="text" value={form.precioReferencia} onChange={handleChange} placeholder="Ej: 23.00" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="stockActual" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259', }} >
-              Stock Actual:
-            </label>
-            <input id="stockActual" name="stockActual" type="number" value={form.stockActual} onChange={handleChange} placeholder="Ej: 100" required min="0" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '1rem', }} />
-          </div>
+          <label htmlFor="stockActual" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Stock Actual:</label>
+          <input id="stockActual" name="stockActual" type="text" value={form.stockActual} onChange={handleChange} placeholder="Ej: 100" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '24px' }}>
-            <label htmlFor="estado" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259', }} >
-              <input id="estado" name="estado" type="checkbox" checked={form.estado} onChange={handleChange} />
-              Activo
-            </label>
-          </div>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259', marginBottom: '24px' }}>
+            <input name="estado" type="checkbox" checked={form.estado} onChange={handleChange} /> Activo
+          </label>
 
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                flex: 1,
-                backgroundColor: loading 
-                  ? '#ccc' 
-                  : isEditing 
-                    ? '#FFA500'   
-                    : '#4CAF50',  
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontSize: '1rem',
-                fontWeight: '600',
-                opacity: loading ? 0.7 : 1,
-              }}
-            >
+            <button type="submit" disabled={loading} style={{ flex: 1, backgroundColor: loading ? '#ccc' : isEditing ? '#FFA500' : '#4CAF50', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: '600' }}>
               {loading ? 'Guardando...' : isEditing ? 'Actualizar' : 'Crear'}
             </button>
-            <button
-              type="button"
-              onClick={() => navigate('/productos')}
-              style={{
-                flex: 1,
-                backgroundColor: '#f44336',
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: '600',
-              }}
-            >
+            <button type="button" onClick={() => navigate('/productos')} style={{ flex: 1, backgroundColor: '#f44336', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: '600' }}>
               Cancelar
             </button>
           </div>

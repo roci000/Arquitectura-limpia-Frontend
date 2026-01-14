@@ -20,10 +20,7 @@ export default function EmpleadoFormPage() {
   useEffect(() => {
     const isEdit = location.pathname.includes('/editar/');
     setIsEditing(isEdit);
-
-    if (isEdit && id) {
-      loadEmpleado(id);
-    }
+    if (isEdit && id) loadEmpleado(id);
   }, [location.pathname, id]);
 
   const loadEmpleado = async (empleadoId) => {
@@ -36,15 +33,14 @@ export default function EmpleadoFormPage() {
         estado: response.data.estado ?? true,
       });
     } catch (err) {
-      console.error('Error al cargar empleado:', err);
-      alert('No se pudo cargar el empleado.');
+      alert('No se pudo cargar el empleado.', err);
       navigate('/empleados');
     }
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
+    setForm(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
     }));
@@ -60,7 +56,6 @@ export default function EmpleadoFormPage() {
         cargo: form.cargo.trim() || null,
         estado: form.estado,
       };
-
       if (isEditing) {
         await apiClient.put(`/Empleado/${id}`, payload);
         alert('Empleado actualizado correctamente.');
@@ -68,10 +63,10 @@ export default function EmpleadoFormPage() {
         await apiClient.post('/Empleado', payload);
         alert('Empleado creado correctamente.');
       }
-
       navigate('/empleados');
     } catch (err) {
-      alert('Error: ' + (err.response?.data?.mensaje || err.message || 'Operación fallida'));
+      const mensaje = err.response?.data?.mensaje || 'Operación fallida';
+      alert('Error: ' + mensaje);
     } finally {
       setLoading(false);
     }
@@ -96,65 +91,24 @@ export default function EmpleadoFormPage() {
         </h2>
 
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-              Nombre:
-            </label>
-            <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Juan" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          </div>
+          <label htmlFor="nombre" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Nombre:</label>
+          <input id="nombre" name="nombre" value={form.nombre} onChange={handleChange} placeholder="Ej: Juan" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="apellido" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-              Apellido:
-            </label>
-            <input id="apellido" name="apellido" value={form.apellido} onChange={handleChange} placeholder="Ej: Pérez" required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          </div>
+          <label htmlFor="apellido" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Apellido:</label>
+          <input id="apellido" name="apellido" value={form.apellido} onChange={handleChange} placeholder="Ej: Pérez" required style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '16px' }}>
-            <label htmlFor="cargo" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-              Cargo:
-            </label>
-            <input id="cargo" name="cargo" value={form.cargo} onChange={handleChange} placeholder="Opcional" style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} />
-          </div>
+          <label htmlFor="cargo" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Cargo:</label>
+          <input id="cargo" name="cargo" value={form.cargo} onChange={handleChange} placeholder="Opcional" style={{ width: '100%', padding: '8px', marginBottom: '16px', border: '1px solid #ccc', borderRadius: '4px' }} />
 
-          <div style={{ marginBottom: '24px' }}>
-            <label htmlFor="estado" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259' }}>
-              <input id="estado" name="estado" type="checkbox" checked={form.estado} onChange={handleChange} />
-              Activo
-            </label>
-          </div>
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '600', color: '#027259', marginBottom: '24px' }}>
+            <input name="estado" type="checkbox" checked={form.estado} onChange={handleChange} /> Activo
+          </label>
 
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                flex: 1,
-                backgroundColor: loading ? '#ccc' : isEditing ? '#FFA500' : '#4CAF50',
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontWeight: '600',
-              }}
-            >
+            <button type="submit" disabled={loading} style={{ flex: 1, backgroundColor: loading ? '#ccc' : isEditing ? '#FFA500' : '#4CAF50', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: '600' }}>
               {loading ? 'Guardando...' : isEditing ? 'Actualizar' : 'Crear'}
             </button>
-            <button
-              type="button"
-              onClick={() => navigate('/empleados')}
-              style={{
-                flex: 1,
-                backgroundColor: '#f44336',
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
+            <button type="button" onClick={() => navigate('/empleados')} style={{ flex: 1, backgroundColor: '#f44336', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: '600' }}>
               Cancelar
             </button>
           </div>

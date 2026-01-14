@@ -1,4 +1,3 @@
-// src/presentation/pages/VentaFormPage.jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
@@ -8,7 +7,6 @@ export default function VentaFormPage() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Datos maestros
   const [clientes, setClientes] = useState([]);
   const [empleados, setEmpleados] = useState([]);
   const [productos, setProductos] = useState([]);
@@ -124,26 +122,17 @@ export default function VentaFormPage() {
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div>
-                <label htmlFor="clienteId" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-                  Cliente:
-                </label>
+                <label htmlFor="clienteId" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Cliente:</label>
                 <select id="clienteId" name="clienteId" value={form.clienteId} onChange={handleInputChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
                   <option value="">Seleccione...</option>
-                  {clientes.map(c => (
-                    <option key={c.id} value={c.id}>{c.nombreCompleto}</option>
-                  ))}
+                  {clientes.map(c => (<option key={c.id} value={c.id}>{c.nombreCompleto}</option>))}
                 </select>
               </div>
-
               <div>
-                <label htmlFor="empleadoId" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>
-                  Empleado:
-                </label>
-                <select id="empleadoId" name="empleadoId" value={form.empleadoId} onChange={handleInputChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }} >
+                <label htmlFor="empleadoId" style={{ display: 'block', marginBottom: '4px', fontWeight: '600', color: '#027259' }}>Empleado:</label>
+                <select id="empleadoId" name="empleadoId" value={form.empleadoId} onChange={handleInputChange} required style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}>
                   <option value="">Seleccione...</option>
-                  {empleados.map(e => (
-                    <option key={e.id} value={e.id}>{e.nombre} {e.apellido}</option>
-                  ))}
+                  {empleados.map(e => (<option key={e.id} value={e.id}>{e.nombre} {e.apellido}</option>))}
                 </select>
               </div>
             </div>
@@ -163,37 +152,18 @@ export default function VentaFormPage() {
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', color: '#027259' }}>Producto</label>
                   <select value={detalle.productoId} onChange={(e) => handleDetalleChange(index, 'productoId', e.target.value)} required style={{ width: '100%', padding: '6px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }}>
                     <option value="">Seleccione...</option>
-                    {productos.map(p => (
-                      <option key={p.id} value={p.id}>{p.nombre} ({p.unidadMedida})</option>
-                    ))}
+                    {productos.map(p => (<option key={p.id} value={p.id}>{p.nombre} ({p.unidadMedida}) - Ref: {p.precioReferencia.toFixed(2)}</option>))}
                   </select>
                 </div>
-
                 <div>
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', color: '#027259' }}>Cantidad</label>
-                  <input type="text" value={detalle.cantidad} onChange={(e) => handleDetalleChange(index, 'cantidad', e.target.value)} required style={{ width: '100%', padding: '6px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }}/>
+                  <input type="text" value={detalle.cantidad} onChange={(e) => handleDetalleChange(index, 'cantidad', e.target.value)} required style={{ width: '100%', padding: '6px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }} />
                 </div>
-
                 <div>
                   <label style={{ display: 'block', marginBottom: '4px', fontSize: '0.85rem', color: '#027259' }}>Precio Unit.</label>
-                  <input type="text" value={detalle.precioUnitario} onChange={(e) => handleDetalleChange(index, 'precioUnitario', e.target.value)} required style={{ width: '100%', padding: '6px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }}/>
+                  <input type="text" value={detalle.precioUnitario} onChange={(e) => handleDetalleChange(index, 'precioUnitario', e.target.value)} required style={{ width: '100%', padding: '6px', border: '1px solid #ccc', borderRadius: '4px', fontSize: '0.9rem' }} />
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => eliminarDetalle(index)}
-                  disabled={detalles.length === 1}
-                  style={{
-                    backgroundColor: detalles.length === 1 ? '#ccc' : '#f44336',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '4px',
-                    width: '32px',
-                    height: '32px',
-                    cursor: detalles.length === 1 ? 'not-allowed' : 'pointer',
-                    fontSize: '1.2rem'
-                  }}
-                >
+                <button type="button" onClick={() => eliminarDetalle(index)} disabled={detalles.length === 1} style={{ backgroundColor: detalles.length === 1 ? '#ccc' : '#f44336', color: 'white', border: 'none', borderRadius: '4px', width: '32px', height: '32px', cursor: detalles.length === 1 ? 'not-allowed' : 'pointer', fontSize: '1.2rem' }}>
                   ×
                 </button>
               </div>
@@ -205,36 +175,10 @@ export default function VentaFormPage() {
           </div>
 
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                flex: 1,
-                backgroundColor: loading ? '#ccc' : '#4CAF50',
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                fontWeight: '600',
-              }}
-            >
+            <button type="submit" disabled={loading} style={{ flex: 1, backgroundColor: loading ? '#ccc' : '#4CAF50', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: loading ? 'not-allowed' : 'pointer', fontWeight: '600' }}>
               {loading ? 'Registrando...' : 'Registrar Venta'}
             </button>
-            <button
-              type="button"
-              onClick={() => navigate('/ventas')}
-              style={{
-                flex: 1,
-                backgroundColor: '#6c757d',
-                color: 'white',
-                padding: '10px 16px',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
+            <button type="button" onClick={() => navigate('/ventas')} style={{ flex: 1, backgroundColor: '#6c757d', color: 'white', padding: '10px 16px', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: '600' }}>
               Cancelar
             </button>
           </div>

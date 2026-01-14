@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 
 export default function Sidebar({ collapsed, onToggle }) {
   const modules = [
-    { name: 'Ventas', path: '/ventas' },
-    { name: 'Ingresos', path: '/ingresos' },
-    { name: 'Productos', path: '/productos' },
-    { name: 'Clientes', path: '/clientes' },
-    { name: 'Proveedores', path: '/proveedores' },
-    { name: 'Empleados', path: '/empleados' },
+    { name: 'Inicio', path: '/', icon: '🏠' }, 
+    { name: 'Ventas', path: '/ventas', icon: '💰' },
+    { name: 'Ingresos', path: '/ingresos', icon: '📦' },
+    { name: 'Productos', path: '/productos', icon: '📱' },
+    { name: 'Clientes', path: '/clientes', icon: '👥' },
+    { name: 'Proveedores', path: '/proveedores', icon: '🏭' },
+    { name: 'Empleados', path: '/empleados', icon: '👔' },
   ];
 
   return (
@@ -46,13 +47,18 @@ export default function Sidebar({ collapsed, onToggle }) {
           <span>☰</span>
         ) : (
           <>
+            <img 
+              src="src/assets/verduras.png" 
+              alt="Verduras" 
+              style={{ width: '45px', height: '45px', marginRight: '10px', borderRadius: '4px' }} 
+            />
             Sistema de Gestión
-            <span style={{ marginRight: '20px' }}>X</span>
+            
           </>
         )}
       </div>
 
-      <nav style={{ flex: 1 }}>
+      <nav style={{ flex: 1, paddingTop: '20px' }}>
         {modules.map((mod) => (
           <Link
             key={mod.path}
@@ -66,11 +72,13 @@ export default function Sidebar({ collapsed, onToggle }) {
               fontSize: '1rem',
               transition: 'background 0.2s, color 0.2s',
               whiteSpace: 'nowrap',
-              overflow: 'hidden'
+              overflow: 'hidden',
+              gap: '12px'
             }}
             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#0D9853'}
             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
           >
+            <span style={{ fontSize: '1.2rem', color: '#FFFFFF' }}>{mod.icon}</span>
             {!collapsed && mod.name}
           </Link>
         ))}
